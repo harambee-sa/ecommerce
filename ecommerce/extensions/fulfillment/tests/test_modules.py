@@ -434,7 +434,7 @@ class EnrollmentFulfillmentModuleTests(ProgramTestMixin, DiscoveryTestMixin, Ful
         self.create_seat_and_order(certificate_type='credit', provider='MIT')
         program_uuid = uuid.uuid4()
         self.mock_program_detail_endpoint(program_uuid, self.site_configuration.discovery_api_url)
-        self.mock_enrollment_api(self.user.username)
+        self.mock_user_data(self.user.username)
         self.prepare_basket_with_voucher(program_uuid=program_uuid)
         __, lines = EnrollmentFulfillmentModule().fulfill_product(self.order, list(self.order.lines.all()))
         # No exceptions should be raised and the order should be fulfilled
@@ -537,15 +537,11 @@ class EntitlementFulfillmentModuleTests(FulfillmentTestMixin, TestCase):
         self.order = create_order(number=1, basket=basket, user=self.user)
         self.logger_name = 'ecommerce.extensions.fulfillment.modules'
         self.return_data = {
-            "results": [
-                {
-                    "username": "honor",
-                    "course_uuid": "3b3123b8-d34b-44d8-9bbb-a12676e97123",
-                    "uuid": "111-222-333",
-                    "mode": "verified",
-                    "expired_at": "None"
-                }
-            ]
+            "user": "honor",
+            "course_uuid": "3b3123b8-d34b-44d8-9bbb-a12676e97123",
+            "uuid": "111-222-333",
+            "mode": "verified",
+            "expired_at": "None"
         }
 
     def test_entitlement_supported_line(self):
