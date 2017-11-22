@@ -3,10 +3,8 @@ from __future__ import unicode_literals
 import logging
 
 from django.conf import settings
-
 from django.db.models import Q
 from oscar.core.loading import get_model
-
 
 from ecommerce.core.constants import COURSE_ENTITLEMENT_PRODUCT_CLASS_NAME
 from ecommerce.extensions.catalogue.utils import generate_sku
@@ -24,6 +22,7 @@ def create_parent_course_entitlement(name, UUID):
     parent, created = Product.objects.get_or_create(
         structure=Product.PARENT,
         product_class=ProductClass.objects.get(name=COURSE_ENTITLEMENT_PRODUCT_CLASS_NAME),
+        title='Parent Course Entitlement for {}'.format(name),
     )
 
     if created:
@@ -47,9 +46,9 @@ def create_or_update_course_entitlement(certificate_type, price, partner, UUID, 
     UUID = unicode(UUID)
 
     certificate_type_query = Q(
-        title='Course Entitlement for {}'.format(name),
+        title='Course {}'.format(name),
         attributes__name='certificate_type',
-        attribute_values__value_text=certificate_type
+        attribute_values__value_text=certificate_type,
     )
 
     try:
@@ -61,7 +60,7 @@ def create_or_update_course_entitlement(certificate_type, price, partner, UUID, 
 
     course_entitlement.structure = Product.CHILD
     course_entitlement.is_discountable = True
-    course_entitlement.title = 'Course Entitlement for {}'.format(name)
+    course_entitlement.title = 'Course {}'.format(name)
     course_entitlement.attr.certificate_type = certificate_type
     course_entitlement.attr.UUID = UUID
     course_entitlement.parent = parent_entitlement
@@ -79,7 +78,7 @@ def create_or_update_course_entitlement(certificate_type, price, partner, UUID, 
     )
 
     logger.info(
-        'Course course entitlement product stock record with certificate type [%s] for [%s] does not exist. '
+        'Course entitlement product stock record with certificate type [%s] for [%s] does not exist. '
         'Instantiated a new instance.',
         certificate_type,
         UUID

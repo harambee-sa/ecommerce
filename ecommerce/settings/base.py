@@ -252,7 +252,7 @@ PROVIDER_DATA_PROCESSING_TIMEOUT = 15  # Value is in seconds.
 CREDIT_PROVIDER_CACHE_TIMEOUT = 600
 
 # Enrollment API settings used for fetching information from LMS
-ENROLLMENT_API_CACHE_TIMEOUT = 3600  # Value is in seconds.
+ENROLLMENT_API_CACHE_TIMEOUT = 30  # Value is in seconds.
 # END URL CONFIGURATION
 
 VOUCHER_CACHE_TIMEOUT = 10  # Value is in seconds.
@@ -577,7 +577,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 # URL for Enterprise service
 ENTERPRISE_SERVICE_URL = 'http://localhost:8000/enterprise/'
 # Cache enterprise response from Enterprise API.
-ENTERPRISE_API_CACHE_TIMEOUT = 3600  # Value is in seconds
+ENTERPRISE_API_CACHE_TIMEOUT = 300  # Value is in seconds
 
 # Name for waffle switch to use for enabling enterprise features on runtime.
 ENABLE_ENTERPRISE_ON_RUNTIME_SWITCH = 'enable_enterprise_on_runtime'
